@@ -1,7 +1,9 @@
+# This setion is used to remove comments from the codebase.
+
 import os
 import re
 
-def remove_comment(codes):
+def remove_comments(codes):
     for entry in codes:
         _, extension = os.path.splitext(entry)
         match extension:
@@ -108,6 +110,13 @@ def remove_comment(codes):
 
             case _:
                 pass
+        
+    # formatted_code=[f"{file_name}:{{{file_code}}}" for file_name,file_code in codes.items()]
+    # print("cleaned_codes : [")
+    # print(",\n".join(formatted_code))
+    # print("]")
+
+    return codes
 
 # # html code
 # codes = {
@@ -235,48 +244,44 @@ def remove_comment(codes):
 # '''
 # }
 
-# .yml / .yaml code
-codes = {
-    'file1.yml': '''
-# This is a single-line comment
-name: Verosha
-age: 25
-''',
-    'file2.yml': '''
-# Key-value pair example
-user:
-  name: Verosha
-  age: 25
-  email: verosha@example.com
-''',
-    'file3.yml': '''
-# List example
-fruits:
-  - apple
-  - banana
-  - cherry
-''',
-    'file4.yaml': '''
-# Multi-line value example
-description: >
-  This is a multi-line
-  string value for the
-  YAML example.
-''',
-    'file5.yaml': '''
-# Nested structure example
-settings:
-  database:
-    host: localhost
-    port: 5432
-    username: admin
-    password: secret
-  features:
-    enabled: true
-    beta: false
-'''
-}
-
-
-remove_comment(codes)
-print(codes)
+## .yml / .yaml code
+# codes = {
+#     'file1.yml': '''
+# # This is a single-line comment
+# name: Verosha
+# age: 25
+# ''',
+#     'file2.yml': '''
+# # Key-value pair example
+# user:
+#   name: Verosha
+#   age: 25
+#   email: verosha@example.com
+# ''',
+#     'file3.yml': '''
+# # List example
+# fruits:
+#   - apple
+#   - banana
+#   - cherry
+# ''',
+#     'file4.yaml': '''
+# # Multi-line value example
+# description: >
+#   This is a multi-line
+#   string value for the
+#   YAML example.
+# ''',
+#     'file5.yaml': '''
+# # Nested structure example
+# settings:
+#   database:
+#     host: localhost
+#     port: 5432
+#     username: admin
+#     password: secret
+#   features:
+#     enabled: true
+#     beta: false
+# '''
+# }

@@ -1,9 +1,9 @@
-
 # This script is used to index the codebase of a project.
+
 import os
 import re
 
-def index_codebase(root_dir, allowed_extensions=None, excluded_dirs=None,excluded_files=None):
+def indexing_codebase(root_dir, allowed_extensions=None, excluded_dirs=None,excluded_files=None):
     if allowed_extensions is None:
         allowed_extensions = {'.py', '.html', '.css', '.java', '.yml','.yaml' '.js', '.jsx'}
     if excluded_dirs is None:
@@ -40,134 +40,10 @@ def index_codebase(root_dir, allowed_extensions=None, excluded_dirs=None,exclude
     
     traverse_directory(root_dir)
 
-    formatted_code=[f"{file_name}:{{{file_code}}}" for file_name,file_code in codes.items()]
-
-    # print("codes : [")
+    # formatted_code=[f"{file_name}:{{{file_code}}}" for file_name,file_code in codes.items()]
+    # print("Codes before remove comment : [")
     # print(",\n".join(formatted_code))
     # print("]")
 
+    print(codes)
     return codes
-
-codebase_path = "/home/verosha/Music/csi-sentinel"
-code_before_remove_comment=index_codebase(codebase_path)
-
-# The remove_comment function is defined in the remove_comments.py file.
-# This setion is used to remove comments from the codebase.
-def remove_comment(codes):
-    for entry in codes:
-        _, extension = os.path.splitext(entry)
-        match extension:
-            case '.py':
-                code = codes[entry]
-                code_lines = []
-                in_multiline_comment = False
-                for line in code.split('\n'):
-                    if in_multiline_comment:
-                        if '"""' in line or "'''" in line:
-                            in_multiline_comment = False
-                        continue                  
-                    if '"""' in line or "'''" in line:
-                        in_multiline_comment = True
-                        continue
-                    line = re.sub(r'#.*$', '', line).rstrip()
-                    if line:
-                        code_lines.append(line)
-                codes[entry] = '\n'.join(code_lines)
-                
-            case '.java':
-                code = codes[entry]
-                in_block_comment = False
-                code_lines = []
-                for line in code.split('\n'):
-                    if in_block_comment:
-                        if '*/' in line:
-                            in_block_comment = False
-                        continue
-                    if '/*' in line:
-                        in_block_comment = True
-                        continue
-                    line = re.sub(r'//.*$', '', line).rstrip()
-                    if line:
-                        code_lines.append(line)
-                codes[entry] = '\n'.join(code_lines)
-
-            case '.html':
-                code = codes[entry]
-                code = re.sub(r'<!--.*?-->', '', code, flags=re.DOTALL)
-                code_lines = [line.rstrip() for line in code.split('\n') if line.strip()]
-                codes[entry] = '\n'.join(code_lines)
-
-            case '.js':
-                code = codes[entry]
-                in_block_comment = False
-                code_lines = []
-                for line in code.split('\n'):
-                    if in_block_comment:
-                        if '*/' in line:
-                            in_block_comment = False
-                        continue
-                    if '/*' in line:
-                        in_block_comment = True
-                        continue
-                    line = re.sub(r'//.*$', '', line).rstrip()
-                    if line:
-                        code_lines.append(line)
-                codes[entry] = '\n'.join(code_lines)
-            
-            case '.jsx':
-                code = codes[entry]
-                code = re.sub(r'\{\s*/\*.*?\*/\s*\}', '', code, flags=re.DOTALL)
-                code = re.sub(r'/\*.*?\*/', '', code, flags=re.DOTALL)
-                in_block_comment = False
-                code_lines = []
-                for line in code.split('\n'):
-                    if in_block_comment:
-                        if '*/}' in line:
-                            in_block_comment = False
-                        continue
-                    if '{/*' in line:
-                        in_block_comment = True
-                        continue
-                    line = re.sub(r'//.*$', '', line).rstrip()
-                    if line:
-                        code_lines.append(line)
-                codes[entry] = '\n'.join(code_lines)
-
-            case '.css':
-                code = codes[entry]
-                code = re.sub(r'/\*.*?\*/', '', code, flags=re.DOTALL)
-                in_block_comment = False
-                code_lines = []
-                for line in code.split('\n'):
-                    if in_block_comment:
-                        if '*/' in line:
-                            in_block_comment = False
-                        continue
-                    if '/*' in line:
-                        in_block_comment = True
-                        continue
-                    code_lines.append(line)
-                codes[entry] = '\n'.join(code_lines)
-
-            case '.yml' | '.yaml':
-                code = codes[entry]
-                code_lines = []
-                for line in code.split('\n'):
-                    line = re.sub(r'#.*$', '', line).rstrip()
-                    if line.strip():
-                        code_lines.append(line)
-                codes[entry] = '\n'.join(code_lines)
-
-            case _:
-                pass
-        
-    formatted_code=[f"{file_name}:{{{file_code}}}" for file_name,file_code in codes.items()]
-
-    print("codes : [")
-    print(",\n".join(formatted_code))
-    print("]")
-
-    return codes
-
-code_after_remove_comment=remove_comment(code_before_remove_comment)
-code_after_remove_comment
