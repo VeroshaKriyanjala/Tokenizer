@@ -56,6 +56,8 @@ pip install -r requirements.txt
 
 ### 5. Running the Project
 
+Before you run the project you need to change ```codebase_path = "/home/verosha/Music/csi-sentinel" ``` with existing codebase in your local machine
+
 To run the tokenizer, execute the following command:
 
 ```bash
