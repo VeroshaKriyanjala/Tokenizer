@@ -1,0 +1,2232 @@
+--- main.py ---
+# import webbrowser
+import os
+import sys, time, logging
+from logging import Logger
+
+import uuid
+sys.path.append('./scripts')
+from constants import CREATE_UI_BUILD_DIR_RESULT_PATH
+from validator import validator
+from helper import Helper
+
+def initLogger():
+    # Create a logger
+    logger = logging.getLogger(__name__)
+    logLevel = Helper.getEnvValue("LOG_LEVEL")
+    logLevelInt = logging.getLevelName(logLevel)
+    
+    logger.setLevel(logLevelInt)
+
+    # Create a console handler and set the level to DEBUG
+    ch = logging.StreamHandler()
+    ch.setLevel(logLevelInt)
+
+    # Create a formatter and add it to the handler
+    formatter = logging.Formatter('[%(levelname)s] - %(message)s')
+    ch.setFormatter(formatter)
+
+    # Add the handler to the logger
+    logger.addHandler(ch)
+
+    return logger
+    
+
+def startValidation(logger : Logger):
+    # target_ruleset_path = sys.argv[1]
+    # db_type = sys.argv[2]
+    # schema = sys.argv[3]
+    # table = sys.argv[4]
+    target_ruleset_path = input(print_format("target_ruleset_path:"))
+    db_type = input(print_format("db_type:"))
+    schema = input(print_format("schema:"))
+    table = input(print_format("table:"))
+    folder_id = input(print_format("save_folder_id:"))
+    
+    folder_id = folder_id.strip()
+    pathToResultFolder = os.path.abspath(f"{CREATE_UI_BUILD_DIR_RESULT_PATH}")
+    # pathToResultFolder = os.path.abspath(f"{CREATE_UI_BUILD_DIR_RESULT_PATH}/builds/{folder_id}")
+    
+    # if Helper.folderExists(pathToResultFolder):
+    #     logger.info("Folder_Already_Exists")
+    #     return
+    
+    target_ruleset_path = "/home/verosha/Desktop/csi-sentinel/rulesets/empi_patients_rulest.json"
+    db_type = "ORACLE"
+    schema = "PH_PHARMACY"
+    table = "PHBAS_BRAND"
+    folder_id = "default"
+
+    new_validator = validator(
+        ruleset_path= target_ruleset_path,
+        target_db_type= db_type,
+        target_schema= schema,
+        target_table = table,
+        logger = logger,
+        pathToResultFolder= pathToResultFolder,
+        build_folder_id= folder_id
+    )
+    new_validator.start()
+
+def quickValidate(logger):
+    # Using this for quick testing purposes 
+    
+    target_ruleset_path = "/home/verosha/Desktop/csi-sentinel/rulesets/testRulest4.json"
+    db_type = "ORACLE"
+    schema = "RF_EMPI"
+    table = "EMRED_PATIENTS"
+    # table = "PATIENT_INFO"
+    folder_id = "default"
+    folder_id = folder_id.strip()
+    pathToResultFolder = os.path.abspath(f"{CREATE_UI_BUILD_DIR_RESULT_PATH}")
+    
+    # target_ruleset_path = "C:\_Projects\other\_tasks\csi-sentinel\scripts\\testRulest2.json"
+    # db_type = "ORACLE"
+    # schema = "BL_APPROVAL"
+    # table = "BLAPP_APPROVAL_PROCEDURE"
+    # pathToResultFolder = uuid.uuid4()
+
+    new_validator = validator(
+        ruleset_path= target_ruleset_path,
+        target_db_type= db_type,
+        target_schema= schema,
+        target_table = table,
+        logger = logger,
+        pathToResultFolder=pathToResultFolder,
+        build_folder_id= folder_id
+    )
+    new_validator.start()
+    
+def print_format(message):
+    return f"[CLI] - {message}"
+
+
+if __name__ == '__main__':
+    logger = initLogger()
+    run_app = True
+    while run_app:
+        #The logs here are written in a way it would be easy for the program using this CLI app to parse, not so much for human readablity.
+        menu_option = input(print_format("menu:"))
+        if menu_option == "validate":
+            startValidation(logger)
+        elif menu_option == "qv":
+            quickValidate(logger)
+        elif (menu_option == "quit") or (menu_option == "q"):
+            run_app = False
+        else:
+            print(print_format("invalid_option"))
+        
+# Look into jococo
+# coverage.py
+# Blog generators / Movable Type
+
+
+--- index.html ---
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/css/dashboard.css">
+</head>
+<body>
+    <head>
+  <link rel="stylesheet" type="text/css" href=static/css/headerComponent.css>
+</head>
+
+<div id="header_div">
+  <h1 id="app_name">Sentinel</h1>
+</div>
+    <head>
+  <link rel="stylesheet" type="text/css" href="static/css/history.css">
+</head>
+
+<div id="history_body_container">
+  <div id="validation_nav_container">
+    <p>RF_EMPI.EMRED_PATIENTS</p>
+  </div>
+
+  <div id="history_result_container">
+    <ul>
+      
+        <head>
+    <link rel="stylesheet" href=static/css/dashboard_list_component.css>
+</head>
+
+<a href=./validations/validation_result_c7f7e56b-2d13-467d-971a-047e2311a5d1.html>
+    <div id="dashboard_list_container_body">
+        <div>
+            
+                <img src=static/assets/cross-mark.png alt="">
+            
+            <p>FAIL</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>0m:0s:0ms Elapsed</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>Run Name : id_type.should_exist_in_list</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>Outlier Percent : 75.0%</p>
+        </div>
+    </div>
+</a>
+      
+    </ul>
+  </div>
+  
+</div>
+</body>
+    
+</html>
+
+--- dashboard.css ---
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+    background-color: #131313;
+}
+
+a{
+    text-decoration: none;
+}
+
+--- dashboard_list_component.css ---
+#dashboard_list_container_body {
+    background-color: #1F1F1F;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    margin-bottom: 14px;
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: space-between;
+
+    color: #FFFFFF;
+}
+
+#dashboard_list_container_body>* {
+    padding: 10px 20px 10px 20px;
+    display: flex;
+}
+
+#dashboard_list_container_body> div > p {
+    min-width: 100px;
+    margin: auto 0 auto 0;
+    text-align: left;
+}
+
+#dashboard_list_container_body> div > img {
+    margin: auto 0 auto 0;
+    padding-right: 10px;
+    height: 20px;
+    width: 20px;
+}
+
+.dashboard_list_container_vertical_divider{
+    width: 2px;
+    height: 100%;
+    background-color: #131313;
+    margin-left: 1vw;
+}
+
+--- headerComponent.css ---
+#app_name{
+    size: 36px;
+    color: #CB9E00;
+    padding: 20px;
+    padding-left: 6vw;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+
+#header_div{
+    background-color: #1A1A1A;
+}
+
+--- hero_button.css ---
+#main_div{
+    border-radius: 12px;
+    background: #1A1A1A;
+    box-shadow: 0px 4px 4px 0px rgba(203, 158, 0, 0.25);
+
+    width: 90px;
+    padding: 9px 16px 9px 16px;
+    margin: 10px 10px 10px 0;
+
+    color: #CB9E00;
+    font-size: 16px;
+    text-align: center;
+}
+
+
+
+--- history.css ---
+
+#validation_nav_container{
+    display: flex;
+    margin-top: 6vh;
+}
+
+#validation_nav_container>p{
+    font-size: 22px;
+    color: #C7C7C7;
+}
+
+#history_body_container{
+    margin: 6px 6vw 6px 6vw;
+}
+
+#history_result_container{
+    background-color: #1A1A1A;
+    border-radius: 16px;
+    margin-top: 6px;
+    padding: 21px;
+
+    min-height: 60vh;
+}
+
+--- validation_details_page.css ---
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+#validation_details_p_body_container{
+    margin: 6px 6vw 6px 6vw;
+}
+
+#validation_detals_page_body{
+    background-color: #131313;
+}
+
+#validation_details_p_title_section{
+    display: flex;
+    justify-content: space-between;
+}
+
+#validation_details_p_title_section>p{
+    color: #C7C7C7;
+    margin: auto 0 auto 0;
+    text-align: center;
+}
+
+#validation_details_p_main_detail_container{
+    background-color: #1A1A1A;
+    color: #C7C7C7;
+    border-radius: 12px;
+    min-height: 70vh;
+    padding: 1vw 1vw 1vw 1vw;
+}
+
+#validation_details_p_outlier_heading{
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+}
+
+#validation_details_p_outlier_heading>p{
+    margin: auto 0 0 0;
+}
+
+#validation_details_p_first_outlier_count{
+    font-size: 13px;
+    color: #C7C7C7;
+}
+
+#validation_details_p_validation_detail_table{
+    margin-top: 15px;
+    border: 1px solid #565656;
+    border-radius: 10px;
+    width: 100%;
+}
+
+#validation_details_p_validation_detail_table>tbody>th,td{
+    padding: 3px 0 3px 10px;
+    border-bottom: 1px solid #565656;
+    border-collapse: collapse;
+}
+#validation_details_p_validation_detail_table > tbody > tr:last-child td {
+    border: none;
+}
+
+#validation_details_p_outlier_heading_download_button_container{
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+a{
+    text-decoration: none;
+}
+
+--- validation_result_8b774c14-98af-4c3c-aa3b-5685968dfcc2.html ---
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Validation Result</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/validation_details_page.css">
+</head>
+
+<body id="validation_detals_page_body">
+    <head>
+  <link rel="stylesheet" type="text/css" href=../static/css/headerComponent.css>
+</head>
+
+<div id="header_div">
+  <h1 id="app_name">Sentinel</h1>
+</div>
+
+    <div id="validation_details_p_body_container">
+
+        <!-- Contains validation title & back button -->
+        <div id="validation_details_p_title_section">
+            <p>Column Name - Validation Name</p>
+            <head>
+    <link rel="stylesheet" type="text/css" href=../static/css/hero_button.css>
+</head>
+
+<a href=../index.html class="hero_button_anchor">
+    <div id="main_div" >
+        <p id="btn_text">Back</p>
+    </div>
+</a>
+        </div>
+
+        <!-- Main Detail Container -->
+        <div id="validation_details_p_main_detail_container">
+
+            <!-- validation list component -->
+            <head>
+    <link rel="stylesheet" href=../static/css/dashboard_list_component.css>
+</head>
+
+<a href=>
+    <div id="dashboard_list_container_body">
+        <div>
+            
+                <img src=../static/assets/cross-mark.png alt="">
+            
+            <p>FAIL</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>0m:0s:0ms Elapsed</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>Run Name : id_type.should_exist_in_list</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>Outlier Percent : 75.0%</p>
+        </div>
+    </div>
+</a>
+
+            <!-- Outlier txt - Maximum results shown text -->
+            <div id="validation_details_p_outlier_heading">
+                <p>Outliers</p>
+                <p id="validation_details_p_first_outlier_count">Showing first 10 Outliers</p>
+            </div>
+
+            <!-- table -->
+            <table id="validation_details_p_validation_detail_table">
+                <tr class="validation_details_p_validation_detail_table_row">
+                    
+                    <th>Index</th>
+                    
+                    <th>Value</th>
+                </tr>
+
+                
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>1</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>2</td>
+                        <td>iqama</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>3</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>4</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>5</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>7</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                
+
+                
+                
+              </table>
+
+            <!-- Download Button right aligned -->
+            <div id="validation_details_p_outlier_heading_download_button_container">
+                <head>
+    <link rel="stylesheet" type="text/css" href=../static/css/hero_button.css>
+</head>
+
+<a href=a class="hero_button_anchor">
+    <div id="main_div" >
+        <p id="btn_text">Download</p>
+    </div>
+</a>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+--- validation_result_c7f7e56b-2d13-467d-971a-047e2311a5d1.html ---
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Validation Result</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/validation_details_page.css">
+</head>
+
+<body id="validation_detals_page_body">
+    <head>
+  <link rel="stylesheet" type="text/css" href=../static/css/headerComponent.css>
+</head>
+
+<div id="header_div">
+  <h1 id="app_name">Sentinel</h1>
+</div>
+
+    <div id="validation_details_p_body_container">
+
+        <!-- Contains validation title & back button -->
+        <div id="validation_details_p_title_section">
+            <p>Column Name - Validation Name</p>
+            <head>
+    <link rel="stylesheet" type="text/css" href=../static/css/hero_button.css>
+</head>
+
+<a href=../index.html class="hero_button_anchor">
+    <div id="main_div" >
+        <p id="btn_text">Back</p>
+    </div>
+</a>
+        </div>
+
+        <!-- Main Detail Container -->
+        <div id="validation_details_p_main_detail_container">
+
+            <!-- validation list component -->
+            <head>
+    <link rel="stylesheet" href=../static/css/dashboard_list_component.css>
+</head>
+
+<a href=>
+    <div id="dashboard_list_container_body">
+        <div>
+            
+                <img src=../static/assets/cross-mark.png alt="">
+            
+            <p>FAIL</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>0m:0s:0ms Elapsed</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>Run Name : id_type.should_exist_in_list</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>Outlier Percent : 75.0%</p>
+        </div>
+    </div>
+</a>
+
+            <!-- Outlier txt - Maximum results shown text -->
+            <div id="validation_details_p_outlier_heading">
+                <p>Outliers</p>
+                <p id="validation_details_p_first_outlier_count">Showing first 10 Outliers</p>
+            </div>
+
+            <!-- table -->
+            <table id="validation_details_p_validation_detail_table">
+                <tr class="validation_details_p_validation_detail_table_row">
+                    
+                    <th>Index</th>
+                    
+                    <th>Value</th>
+                </tr>
+
+                
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>1</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>2</td>
+                        <td>iqama</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>3</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>4</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>5</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>7</td>
+                        <td>nid</td>
+                    </tr>
+                    
+                
+
+                
+                
+              </table>
+
+            <!-- Download Button right aligned -->
+            <div id="validation_details_p_outlier_heading_download_button_container">
+                <head>
+    <link rel="stylesheet" type="text/css" href=../static/css/hero_button.css>
+</head>
+
+<a href=a class="hero_button_anchor">
+    <div id="main_div" >
+        <p id="btn_text">Download</p>
+    </div>
+</a>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+--- APIClient.py ---
+import requests, warnings, urllib3
+
+class APIClient:
+    def __init__(self):
+        self.base_url = 'https://vidaqa.cloudsolutions.com.sa/csi-api/csi-pms-rms-masterdata/amd-masterdata/common/'
+
+        # Define headers
+        self.headers = {
+            'authority': 'vidaqa.cloudsolutions.com.sa',
+            'accept': 'application/json, text/plain, */*',
+            'accept-language': 'en-US,en;q=0.9',
+            'authorization': 'bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJsaHRESVZmeDF5U3BjcHQ3YzBJNzdhbWRCTmpINHhIRDVMX3VVRkdfTnZnIn0.eyJqdGkiOiI5MmIyOGVlOS1hMWJkLTQwZTUtYTE5ZS1mMWIyMDBkNGQ2NTgiLCJleHAiOjE3MDg2MTQ5OTMsIm5iZiI6MCwiaWF0IjoxNzA4NTc4OTkzLCJpc3MiOiJodHRwczovL3ZpZGFxYS5jbG91ZHNvbHV0aW9ucy5jb20uc2EvYXV0aC9yZWFsbXMvdmlkYXFhIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjZmMWQ1ZTBmLTA4MWEtNGM1Ni05ZWI5LWUxZDkxZWI2ZWMyZiIsInR5cCI6IkJlYXJlciIsImF6cCI6ImFwcCIsIm5vbmNlIjoiNmZlZTE1NjMtM2JlMC00MDA1LWI1MjEtNmE3Mjk2ODNkMjY2IiwiYXV0aF90aW1lIjoxNzA4NTc4OTgzLCJzZXNzaW9uX3N0YXRlIjoiNjVjZWJiYmQtMGI4ZC00MDEwLTk3N2UtZGM5YWJlNzlhYTRhIiwiYWNyIjoiMCIsImFsbG93ZWQtb3JpZ2lucyI6WyIqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJBZG1pbiBSTVMiLCJSZWNlcHRpb25pc3QtU2V0dXAiLCJSZWNlcHRpb25pc3QiLCJFTURBQSBBZG1pbiIsIkJpbGxpbmcgUmVjZXB0aW9uaXN0IiwiRG9jdG9yIiwiQUJEVUxBWklaIiwiUmVjZXB0aW9uaXN0LVJNUyIsImNvbmZpZy1tYW5hZ2VyIiwidW5rb3duIiwiUmVjZXB0aW9uaXN0LUFEVCIsIm9mZmxpbmVfYWNjZXNzIiwiYmlsbGluZ29mZmljZXIiLCJ1bWFfYXV0aG9yaXphdGlvbiIsIk1PUkdVRS1BRE1JTiIsIkJpbGxpbmcgUmVjZXB0aW9uaXN0LUFwcHJvdmFsIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgcHJvZmlsZSBlbWFpbCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IlVTRVIgU0VUVVAiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiIzMDA0IiwibG9jYWxlIjoiZW4iLCJnaXZlbl9uYW1lIjoiVVNFUiIsImZhbWlseV9uYW1lIjoiU0VUVVAiLCJlbWFpbCI6InRpc2hhbi5oYXJpc2NoYW5kcmFAY2xvdWRzb2x1dGlvbi1zYS5jb20ifQ.BO6dvYMHk0WqNlvSPqsLPLRV2UM1FoOeXYHdQ9fj1B_25QItcRkguJPw6ONkYNrCLH9ckhu9PzJauv8ZkGwB-pRbob3l4ZTYlvgFM-V-eJc_G4guhtm34ONJojye3yKpq9BJvxdj07nBN5EbZtXjJ2Qr-npMGY7XR6L0Frh3Hi_BNiXHCGXQTTg6m992n9Py19ziAUwyRIgr1SfNWDeBjX95JyzE5xecFYYcCpcmwLbgehquoB2hJNlojifolE-Do0jjpVPhx_3NY65Q6u8h2LUyoFnTkVctMfiNIL2M6CJzQ0y6RVFFwZKaukgToi2btZ_W8S4NFTYDg-VPqPRtWQ',
+            'cookie': '_pk_id.3.ca92=ee398e3880b926c4.1693892177.; _pk_ses.3.ca92=1',
+            'referer': 'https://vidaqa.cloudsolutions.com.sa/setup/',
+            'sec-ch-ua': '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': 'Windows',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            'traceparent': '00-5c9ef80c5cf04d8cfea361e6f26f7bf2-95bc3e179694215f-01',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+            'x-group': '58',
+            'x-hospital': '59',
+            'x-location': '59',
+            'x-module': 'setup',
+            'x-user': '3004',
+        }
+        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+        warnings.filterwarnings("ignore", message="Unverified HTTPS request")
+
+    def getAllMasterdata(self):
+        url = self.base_url + 'module/getAll?lang=en&internationalization=false'
+        response = requests.get(url, headers=self.headers, verify=False)
+        return response.json()
+    
+    def getCategoryDetailsMasterdata(self, categoryId):
+        url = self.base_url + f'categoryValue/getByCategory/{categoryId}'
+        response = requests.get(url, headers=self.headers, verify=False)
+        return response.json()
+
+
+
+--- ErrorDTO.py ---
+class ErrorDTO():
+    
+    def __init__(self, errorCode, errorMessage):
+        self.errorCode = errorCode
+        self.errorMessage = errorMessage
+    
+    def equals(self, errorCode, errorMessage):
+        if (errorCode == self.errorCode) and (errorMessage == self.errorMessage):
+            return True
+        return False
+
+--- constants.py ---
+VALIDATION_STATUS_PASS = "PASS"
+VALIDATION_STATUS_FAIL = "FAIL"
+
+VALIDATION_MAX_OUTLIER_DISPLAY_COUNT = 10
+VALIDATION_SUCCESS_THRESHOLD = 0 #If outliers exceed this threshold, test will be considered failed. ex- 0.4% of records outliers would mean validation is considered failed if threshold is 0
+
+ORACLE_DATABASE = "ORACLE"
+
+ERROR_FILE_NOT_FOUND = "File Not Found!"
+
+# CREATE_UI_BUILD_DIR_RESULT_PATH = "results/testing_folder_id"
+CREATE_UI_BUILD_DIR_RESULT_PATH = "results"
+
+
+PROCESS_VALIDATING_RULESET = "Validating_Ruleset"
+PROCESS_VALIDATING = "Validating"
+PROCESS_READING_EXCEL = "Loading_Excel"
+PROCESS_DOWNLOADING_TABLE = "Downloading_Table"
+PROCESS_HIGHLIGTING_EXCEL = "Highlighting_Excel"
+
+# Ruleset Fields
+RULESET_FIELD_VALIDATIONS = "validations"
+RULESET_FIELD_PRIMARY_RULE = "rule"
+RULESET_FIELD_PRIMARY_COLUMN = "column"
+RULESET_FIELD_SECONDARY_COLUMN = "column"
+RULESET_FIELD_BINDINGS = "bindings"
+RULESET_FIELD_BINDINGS_VALUE = "value"
+RULESET_FIELD_BINDINGS_VALID_OPTIONS = "valid_options"
+
+RULESET_FIELD_ARGS = "args"
+RULESET_FILED_ARGS_RULE = "rule"
+RULESET_FIELD_ARGS_LIST = "list"
+RULESET_FIELD_ARGS_SERVICE = "service"
+RULESET_FIELD_ARGS_CATEGORY = "category"
+
+# Errors
+ERROR_FIELD_MISSING = "Field_Missing"
+ERROR_ARGS_FIELD_MISSING = "Args_Field_Missing"
+ERROR_INVALID_RULE = "Invalid_Rule"
+ERROR_INVALID_SUBRULE = "Invalid_Subrule"
+ERROR_COLUMN_NOT_FOUND = "Column_Not_Found"
+
+RULESET_ERROR_VALIDATIONS_FIELD_MISSING = f"{ERROR_FIELD_MISSING}:{RULESET_FIELD_VALIDATIONS}"
+RULESET_ERROR_PRIMARY_RULE_FIELD_MISSING = f"{ERROR_FIELD_MISSING}:{RULESET_FIELD_PRIMARY_RULE}"
+RULESET_ERROR_PRIMARY_COLUMN_FIELD_MISSING = f"{ERROR_FIELD_MISSING}:{RULESET_FIELD_PRIMARY_COLUMN}"
+RULESET_ERROR_ARGS_FIELD_MISSING = f"{ERROR_FIELD_MISSING}:{RULESET_FIELD_ARGS}"
+RULESET_ERROR_ARGS_RULE_FIELD_MISSING = f"{ERROR_ARGS_FIELD_MISSING}:{RULESET_FILED_ARGS_RULE}"
+RULESET_ERROR_ARGS_INVALID_SUBRULE = f"{ERROR_ARGS_FIELD_MISSING}:{ERROR_INVALID_SUBRULE}"
+RULESET_ERROR_ARGS_SECONDARY_COLUMN = f"{ERROR_ARGS_FIELD_MISSING}:{RULESET_FIELD_SECONDARY_COLUMN}"
+RULESET_ERROR_ARGS_BINDINGS = f"{ERROR_ARGS_FIELD_MISSING}:{RULESET_FIELD_BINDINGS}"
+RULESET_ERROR_ARGS_BINDINGS_VALUE_FIELD_MISSING = f"{ERROR_ARGS_FIELD_MISSING}:{RULESET_FIELD_BINDINGS}:{RULESET_FIELD_BINDINGS_VALUE}"
+RULESET_ERROR_ARGS_BINDINGS_VALID_OPTIONS_FIELD_MISSING = f"{ERROR_ARGS_FIELD_MISSING}:{RULESET_FIELD_BINDINGS}:{RULESET_FIELD_BINDINGS_VALID_OPTIONS}"
+RULESET_ERROR_ARGS_LIST_FIELD_MISSING = f"{ERROR_ARGS_FIELD_MISSING}:{RULESET_FIELD_ARGS_LIST}"
+RULESET_ERROR_ARGS_SERVICE_MISSING = f"{ERROR_ARGS_FIELD_MISSING}:{RULESET_FIELD_ARGS_SERVICE}"
+RULESET_ERROR_ARGS_CATEGORY_MISSING = f"{ERROR_ARGS_FIELD_MISSING}:{RULESET_FIELD_ARGS_CATEGORY}"
+
+RULESET_ERROR_INVALID_RULE = "Invalid_Rule"
+
+RULESET_ERROR_COLUMN_NOT_FOUND = "Column_Not_Found"
+
+ERROR_CODE_VALIDATIONS_FIELD_MISSING = 1001
+ERROR_CODE_PRIMARY_RULE_FIELD_MISSING = 1002
+ERROR_CODE_PRIMARY_COLUMN_FIELD_MISSING = 1003
+ERROR_CODE_ARGS_FIELD_MISSING = 1004
+ERROR_CODE_COLUMN_NOT_FOUND = 1005
+ERROR_CODE_ARGS_RULE_FIELD_MISSING = 1006
+ERROR_CODE_ARGS_INVALID_SUBRULE = 1007
+ERROR_CODE_ARGS_SECONDARY_COLUMN_MISSING = 1008
+ERROR_CODE_ARGS_BINDINGS_COLUMN_MISSING = 1009
+ERROR_CODE_ARGS_BINDINGS_VALUE_FIELD_MISSING = 1010
+ERROR_CODE_ARGS_BINDINGS_VALID_OPTIONS_FIELD_MISSING = 1011
+ERROR_CODE_ARGS_LIST_MISSING = 1012
+ERROR_CODE_ARGS_SERVICE_MISSING = 1013
+ERROR_CODE_ARGS_CATEGORY_MISSING = 1014
+
+
+--- datasource.py ---
+import os
+from constants import *
+from helper import Helper
+from logging import Logger
+import pandas as pd
+from sqlalchemy import create_engine
+
+class Datasource():
+    
+    def __init__(self, logger : Logger):
+        self.logger = logger
+        self.helper = Helper(logger)
+
+    def loadTable(self, schema_name, table_name , target_db=ORACLE_DATABASE, table_cache_path=None):
+        """ Load pandas DataFrame of the Requested table. If table data is not cached already, 
+        it will download from the database, cache the table and returns the DataFrame.
+
+        Args:
+            target_db (string): The type of the target database ex- ORACLE, POSTGRESS, MS_SQL
+            schema_name (string): Target Schema Name
+            table_name (string): Target Table Name
+
+        Returns:
+            DataFrame : returns a pandas dataframe with the loaded table
+        """
+        
+        if table_cache_path is None:
+            path = f"../results/table_cache/{schema_name}.{table_name}.xlsx"
+        else:
+            path = f"{table_cache_path}/{schema_name}.{table_name}.xlsx"
+
+        path = os.path.join(os.path.dirname(__file__), path)
+        path = os.path.abspath(path)
+
+        try:
+            if not self.helper.fileExists(path):
+                raise FileNotFoundError
+            
+            self.logger.info(f"{PROCESS_READING_EXCEL}:START")
+            df = pd.read_excel(path)
+            self.logger.info(f"{PROCESS_READING_EXCEL}:END")
+        except FileNotFoundError:
+            self.logger.debug("File not found, fetching from db...")
+            df = self.fetchTable(target_db, schema_name, table_name)
+            self.logger.debug(f"Saving : {path}")
+            df.to_excel(path, index=False) 
+
+        return df
+
+
+    def connectOracleDB(self):
+        username = self.helper.getEnvValue("username")
+        password = self.helper.getEnvValue("password")
+        host = self.helper.getEnvValue("host")
+        port = self.helper.getEnvValue("port")
+        service_name = self.helper.getEnvValue("service_name")
+
+        connection_string = f'oracle+oracledb://{username}:{password}@{host}:{port}/?service_name={service_name}'
+        engine = create_engine(connection_string)
+        return engine
+
+    def fetchTable(self, target_db, schema_name, table_name):
+        """Fetches the table according to the schema
+
+        Args:
+            target_db (string): The type of the target database ex- ORACLE, POSTGRESS, MS_SQL
+            schema_name (string): Target Schema Name
+            table_name (string): Target Table Name
+
+        Returns:
+            DataFrame : returns a pandas dataframe with the downloaded table
+        """
+
+        engine = None
+        if target_db == ORACLE_DATABASE:
+            engine = self.connectOracleDB()
+        #Add More if conditions for different database connectors here and implement appropriate db connection method (ex- connectPostgressDB)
+        #Only If nescessary
+        self.logger.info(f"{PROCESS_DOWNLOADING_TABLE}:START")
+
+        sql_query = f'SELECT * FROM {schema_name}.{table_name}'
+        df = pd.read_sql(sql_query, con=engine)
+        self.logger.info(f"{PROCESS_DOWNLOADING_TABLE}:END")
+        return df
+    
+
+
+--- helper.py ---
+import os, uuid
+import time
+from dotenv import load_dotenv, dotenv_values
+from logging import Logger
+
+class Helper():
+    
+    def __init__(self, logger : Logger):
+        self.logger = logger
+    
+    
+    ########################################################
+    ################## Static methods ######################
+    ########################################################
+
+    @staticmethod
+    def getEnvValue(key):
+        config = dotenv_values(".env") 
+        return config.get(key,None)
+
+    @staticmethod
+    def fileExists(file_path):
+        return os.path.exists(file_path)
+    
+    @staticmethod
+    def folderExists(folder_path):
+        return os.path.isdir(folder_path)
+    
+
+    ########################################################
+    ###Functions below are for cruds of any type of file.###
+    ########################################################
+    def loadFile(self, path):
+        try:
+            with open(path, 'r', encoding='utf-8') as file:
+                contents = file.read()
+            return contents
+        except FileNotFoundError:
+            self.logger.debug(f"Error: File '{path}' not found.")
+            return None
+
+    def appendFile(self, path, text):
+        # Ensure the directory exists
+        directory = os.path.dirname(path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        
+        with open(path, 'a+', encoding='utf-8') as file:
+            file.write(text)
+
+    def saveFile(self, path, text):
+        # Ensure the directory exists
+        directory = os.path.dirname(path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        
+        with open(path, 'w', encoding='utf-8') as file:
+            file.write(text)
+
+
+    def overwriteFile(self, path, text):
+        try:
+            with open(path, 'w') as file:
+                file.write(text)
+            self.logger.debug(f"File '{path}' overwritten.")
+        except FileNotFoundError:
+            self.logger.debug(f"Error: File '{path}' not found.")
+
+    # def saveFile(self, path, text):
+    #     if os.path.exists(path):
+    #         self.logger.debug(f"File '{path}' already exists. Overwriting...")
+    #         self.overwriteFile(path, text)
+    #     else:
+    #         self.logger.debug(f"Creating new file '{path}'...")
+    #         self.appendFile(path, text)
+            
+    
+    ########################################################
+    ######### Folder generation related methods ############
+    ########################################################
+
+    def createFolderIfMissing(self, folder_path):
+        if folder_path:  # Ensure folder_path is not empty
+            self.logger.debug(f"Does path exist ? {os.path.exists(folder_path)}")
+            if not os.path.exists(folder_path):
+                os.mkdir(folder_path)
+                self.logger.debug(f"Folder created: {folder_path}")
+    
+    def createDirectories(self, path):
+        print(path)
+        path = path.replace("\\", "/")
+        directories = path.split("/")
+        self.logger.debug(f"Create Directories Split : {directories}")
+
+        # Iterate through the directories and create them if they don't exist
+        current_path = ""
+        for directory in directories:
+            if directory:  # Ensure directory is not empty
+                if current_path:
+                    current_path = f"{current_path}/{directory}"
+                else:
+                    current_path = directory
+                
+                if "." in directory:
+                    self.logger.debug(f"Breaking cause of this dot : {directory}")
+                    break  # Skip if current path is a file
+                
+                self.createFolderIfMissing(current_path)
+    
+    ########################################################
+    ########## Support methods for calculations ############
+    ########################################################
+
+    def getCurrentTime(self):
+        return time.time()
+
+    def calculateTimeElapsed(self, start_time):
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+
+        minutes, seconds = divmod(elapsed_time, 60)
+        seconds, milliseconds = divmod(seconds, 1)
+        milliseconds = int(milliseconds * 1000)
+
+        return f"{int(minutes)}m:{int(seconds)}s:{milliseconds}ms"
+    
+    def getPercentage(self, value,total,decimal_places=2):
+        return round((value/total)*100 , decimal_places)
+
+--- render.py ---
+from jinja2 import Environment, FileSystemLoader
+from constants import CREATE_UI_BUILD_DIR_RESULT_PATH
+from helper import Helper
+from logging import Logger
+import os, json
+import shutil
+
+RELATIVE_PATH_TO_RESULTS_FOLDER = f"../{CREATE_UI_BUILD_DIR_RESULT_PATH}"
+
+class Render():
+    
+    def __init__(self, logger : Logger):
+        self.logger = logger
+        self.helper = Helper(logger=logger)
+
+    def copy_files(self, src_folder, dest_folder, fileExtension):
+        """ Copies files/folders from target to destination locations, rewrites any already existing files with duplicate names in destination
+
+        Args:
+            src_folder (string): Folder path to copy from
+            dest_folder (string): Folder path to copy into
+            fileExtension (string): Filters files with the target file extension from src destination before copying is performed
+        """
+        
+        self.helper.createDirectories(dest_folder)
+        # Iterate through all files and subdirectories in the source folder
+        for root, dirs, files in os.walk(src_folder):
+            for file in files:
+                # Check if the file has the specified extension or if "ALL" is specified
+                if file.endswith(fileExtension) or fileExtension == "ALL":
+                    src_path = os.path.join(root, file)  # Full path to the source file
+                    dest_path = os.path.join(dest_folder, file)  # Full path to the destination file
+
+                    # Ensure the destination directory exists
+                    os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+
+                    # Copy the file to the destination, overwriting if it already exists
+                    shutil.copy2(src_path, dest_path)
+                    self.logger.debug(f"Copied: {src_path} to {dest_path}")
+
+
+    def loadValidations(self, pathToResultFolder):
+        """Loads and reads the validations such that only a list of validations are returned
+
+        Returns:
+            array: A list of validations
+        """
+
+        validationResultFilePath = os.path.join(os.path.dirname(__file__), f'{pathToResultFolder}/validationResults.json')
+        strFileData = self.helper.loadFile(validationResultFilePath)
+        validationResultsFile = json.loads(strFileData)
+        allValidations = []
+        for validator_execution_object in validationResultsFile:
+            for validation in validator_execution_object["validations"]:
+                allValidations.append(validation)
+
+        return allValidations
+
+    def __renderDashboard(self, templates_path,allValidations, pathToResultFolder):
+        """ Renders dashboard file into "....{build_id}" folder
+
+        Args:
+            templates_path (string): Path to the Jinja2 render template folder
+            allValidations (list<object>): List of validation result objects
+            pathToResultFolder (string): Target Build Location
+        """
+        
+        self.helper.createDirectories(f'{pathToResultFolder}/ui_build/index.html')
+
+        env = Environment(loader=FileSystemLoader(templates_path))
+        template = env.get_template('dashboard.html')
+        #Loading the generated Validation Results file to build the UI.
+        output = template.render(records=allValidations)
+
+        htmlIndexFileLocation = os.path.join(os.path.dirname(__file__), f'{pathToResultFolder}/ui_build/index.html')
+        self.helper.saveFile( htmlIndexFileLocation, output)
+
+    def __renderValidations(self, templates_path,allValidations, pathToResultFolder):
+        """ Renders all validations into "....{build_id}/ui_build/validations" folder
+
+        Args:
+            templates_path (string): Path to the Jinja2 render template folder
+            allValidations (list<object>): List of validation result objects
+            pathToResultFolder (string): Target Build Location
+        """
+        
+        self.helper.createDirectories(f'{pathToResultFolder}/ui_build/validations')
+
+        env = Environment(loader=FileSystemLoader(templates_path))
+        template = env.get_template('pages/validation_details_page/validation_details_page.html')
+
+        for validation in allValidations:
+            output = template.render(validation_record=validation)
+            newValidationPath = os.path.join(os.path.dirname(__file__), f'{pathToResultFolder}/ui_build/validations/validation_result_{validation["id"]}.html')
+            self.helper.saveFile(newValidationPath, output)
+
+
+    def render(self , pathToResultFolder):
+        """ Reads Validation Results from "project_root/results/{build_id}/validationResults.json"
+        and builds a static UI into "project_root/results/{build_id}/ui_build" folder
+        """
+        templates_path = os.path.join(os.path.dirname(__file__), '../templates')
+        allValidations = self.loadValidations(pathToResultFolder)
+
+        self.__renderDashboard(templates_path,allValidations,pathToResultFolder)
+        self.__renderValidations(templates_path,allValidations,pathToResultFolder)
+
+        uiBuildPath = os.path.join(os.path.dirname(__file__), f'{pathToResultFolder}/ui_build')
+        self.logger.debug(uiBuildPath)
+
+        self.copy_files(templates_path ,f"{uiBuildPath}/static/css" ,".css")
+        self.copy_files(f"{templates_path}/assets" , f"{uiBuildPath}/static/assets" , "ALL")
+
+
+--- validation.py ---
+import json, uuid
+from helper import Helper
+from render import Render
+from logging import Logger
+from constants import *
+import pandas as pd
+import os
+
+class Validation:
+    
+    def __init__(self,schema_name,table_name,logger : Logger):
+        self.schema_name = schema_name
+        self.table_name = table_name
+        self.validation_list = []
+        self.validator_id = str(uuid.uuid4())
+        self.pk_column = ""
+        self.logger = logger
+        self.helper = Helper(logger=logger)
+        self.render = Render(logger=logger)
+    
+    def addValidation(self,target_column="" , description="", dataframe=pd.DataFrame ,result_array=[],
+                      success_threshold=0, elapsed_time = 0, max_outlier_displayed=0):
+        """Adds a single validation
+
+        Args:
+            description (str, optional): Validation description. Defaults to "".
+            dataframe (_type_, optional): The full dataframe you have performed the validation on. Defaults to pd.DataFrame.
+            result_array (list, optional): The array returned from your validation. Defaults to [].
+            success_threshold (int, optional): The validation will be labelled Pass if result_percentage is calculated to be less or equal to success threshold. Defaults to 0.
+        """
+
+        result_percentage = self.helper.getPercentage(len(result_array["outlier_indexes"]), len(dataframe), 2)
+        if result_percentage <= success_threshold:
+            status = VALIDATION_STATUS_PASS
+        else:
+            status = VALIDATION_STATUS_FAIL
+        
+        tempValidation = {
+            "id": str(uuid.uuid4()),
+            "schema_name": self.schema_name,
+            "table_name": self.table_name,
+            "column_name": target_column,
+            "status": status,
+            "elapsed_time" : elapsed_time,
+            "result_percent":result_percentage,
+            "description": description,
+            "max_outlier_displayed": max_outlier_displayed,
+            "result_array": result_array 
+        }
+        self.validation_list.append(tempValidation)
+    
+    
+    def save(self, pathToResultFolder):
+        """Saves all validation results added into this class's instance. then rebuilds
+        all the UI.
+
+        Args:
+            status (string): Validation status, eg- PASS,FAIL
+            description (string): description of the validation
+            result_percent (float): percentage of valdation result
+            table_name (str, optional): target table name. Defaults to "".
+            schema_name (str, optional): target schema name. Defaults to "".
+        """
+        all_validations = {
+            "validator_id": self.validator_id,
+            "validations": []
+        }
+        
+        for v in self.validation_list:
+            single_validation = {
+                "id": str(uuid.uuid4()),
+                "schema_name": self.schema_name,
+                "table_name": self.table_name,
+                "status": v["status"],
+                "elapsed_time" : v["elapsed_time"],
+                "column_name": v["column_name"],
+                "result_percent":v["result_percent"],
+                "description": v["description"],
+                "max_outlier_displayed": v["max_outlier_displayed"],
+                "result_array": v["result_array"],
+                "pk": self.pk_column
+            }
+            all_validations["validations"].append(single_validation)
+        
+        targetPath = f"{pathToResultFolder}/validationResults.json"
+        targetPath = os.path.abspath(targetPath)
+        
+        self.logger.debug(f"Loading Validation Result from : {targetPath}")
+        validationResultString = self.helper.loadFile(targetPath)
+        
+        if validationResultString == None:
+            validationResultString = "[]"
+        if validationResultString.strip() == "":
+            validationResultString = "[]"
+        allValidations = json.loads(validationResultString)
+        
+        # allValidations.append(all_validations)
+        #Initially validations were appended upon one another. Will be disabling this temporarily. <validationResult - Overite>
+        allValidations = [all_validations]
+        
+        self.helper.createDirectories(targetPath)
+        self.helper.saveFile(targetPath, json.dumps(allValidations))
+        
+        self.render.render(pathToResultFolder)
+    
+    def setPkColumn(self, column_name):
+        self.pk_column = column_name
+        
+    def getValidations(self):
+        return self.validation_list
+
+
+--- PandasTest.py ---
+import sys
+sys.path.append('scripts')
+
+import pandas as pd
+from helper import getPercentage
+
+# Replace 'your_file.csv' with the path to your CSV file
+file_path = 'C:\_Projects\other\_tasks\GxAlt\data\PHBAS_MAR_SCHEDULES_SUMMARY_202311080938.csv'
+
+# Load the CSV file into a Pandas DataFrame
+data = pd.read_csv(file_path, low_memory=False)
+
+#Display All Data
+print(data.head())
+print(data.columns)
+
+num_rows = len(data)
+duplicate_count = data.duplicated(subset=['HOSPITALID']).sum()
+duplicate_percent = getPercentage(duplicate_count,num_rows)
+print(f"Duplicate Count {duplicate_count} || {duplicate_percent}")
+
+null_count = data["HOSPITALID"].isnull().sum()
+null_percent = getPercentage(null_count,num_rows,4)
+print(f"Number of null values in HOSPITALID: {null_count} || {null_percent}")
+
+--- validator.py ---
+import os, json
+import pandas as pd
+from APIClient import APIClient
+from ErrorDTO import ErrorDTO
+from constants import *
+from helper import Helper
+from validation import Validation
+from datasource import Datasource
+from logging import Logger
+from openpyxl import Workbook, load_workbook
+from openpyxl.styles import PatternFill
+from hijridate import Hijri
+from datetime import datetime
+class validator():
+    #   Take ruleset path, target database type, target schema, target table
+    #   Fetch dataframe
+    #   apply the ruleset to target column (each validation is setup in the ruleset json file)
+    #   <Outliers (Records that dont fit the ruleset) Must be saved by default>
+    #   Generate the UI
+    
+    should_be_compared_to_subrules = ['>', '<', '==', '!=', 'if_col_A_Not_Null_Col_B_Should_not_be_null', 'if_col_A_Not_Null_Col_B_Should_be_null', '>=', '<=',"if_value_in_list"]
+    ruleset_valid = False
+
+    def __init__(self, ruleset_path : str, target_db_type : str, target_schema : str, target_table : str, logger : Logger, pathToResultFolder :str , 
+                build_folder_id : str, table_cache_path : str = f"{os.getcwd()}/results/table_cache"):
+        self.ruleset_path = ruleset_path
+        self.target_db_type = target_db_type
+        self.target_schema = target_schema
+        self.target_table = target_table
+        self.logger = logger
+        self.helper = Helper(logger=logger)
+        self.validation = Validation(target_schema , target_table, logger)
+        self.path_to_build_folder = f"{pathToResultFolder}/builds/{build_folder_id}"
+        self.path_to_result_folder = pathToResultFolder
+        self.table_cache_path = table_cache_path
+        self.api_client = APIClient()
+        self.masterdataModules = []
+        self.masterdataCategories = {}
+        
+        self.datasource = Datasource(logger=logger)
+        self.target_dataframe = self.datasource.loadTable(schema_name=target_schema, table_name=target_table , target_db=target_db_type, table_cache_path=table_cache_path)
+    def start(self):
+        ruleset = json.loads(self.helper.loadFile(self.ruleset_path))
+        self.applyRulesets(ruleset)
+        if self.ruleset_valid:
+            self.validation.save(self.path_to_build_folder)
+            self.highlightExcel()
+            return self.validation.getValidations()
+        return None
+    
+    def highlightExcel(self):
+        """Highligts all the outliers from the original xlsx file and saves it in the respective build folder 
+        """
+        self.logger.info(f"{PROCESS_HIGHLIGTING_EXCEL}:START")
+        
+        # excel_file_path = f'{self.path_to_result_folder}/table_cache/{self.target_schema}.{self.target_table}.xlsx'
+        excel_file_path = f'{self.table_cache_path}/{self.target_schema}.{self.target_table}.xlsx'
+        
+        # Load the Excel workbook
+        workbook = load_workbook(excel_file_path)
+        sheet = workbook.active
+        fill = PatternFill(patternType="solid", fgColor='00FFFF00')
+        validationResultFilePath = os.path.join(os.path.dirname(__file__), f'{self.path_to_build_folder}/validationResults.json')
+        validationResults = json.loads(self.helper.loadFile(validationResultFilePath))
+        validationResults = validationResults[0]["validations"]
+        
+        for result in validationResults:
+            table_id_column = result["pk"]
+            target_column = result["column_name"]
+            
+            column_index = -1
+            for col in sheet.iter_cols(min_col=1, max_col=sheet.max_column, min_row=1, max_row=1):
+                if col[0].value == target_column:
+                    column_index = col[0].column
+            
+            if table_id_column == "":
+                indexes = result["result_array"]["outlier_indexes"]
+            else:
+                booleanFilter = self.target_dataframe[table_id_column].isin(result["result_array"]["outlier_indexes"])
+                indexes = self.target_dataframe[booleanFilter].index.tolist()
+            
+            self.logger.debug(f"row indexes : {indexes}")
+            for row_index in indexes:
+                row_index += 1
+                self.logger.debug(f"Coloring cell col/row : {column_index}/{row_index}")
+                sheet.cell(row=row_index + 1, column=column_index).fill = fill
+        
+        workbook.save(f"{self.path_to_build_folder}/highlighted_excel.xlsx")
+        
+        self.logger.info(f"{PROCESS_HIGHLIGTING_EXCEL}:END")
+        
+        
+
+    def validateRuleset(self, ruleset):
+        """ Validates if the provided ruleset file is valid or invalid. 
+        Note: When a new rule is added, this method must be updated to accomadate 
+        any new essential parameters required for a new rule
+
+        Args:
+            ruleset (String): Ruleset dictionary object
+
+        Returns:
+            boolean : True if Ruleset is valid, else false
+        """
+        
+        self.logger.info(f"{PROCESS_VALIDATING_RULESET}:START")
+        
+        #Checking if the essential validations key exists
+        if ruleset.get("validations","") == "":
+            self.logger.info(RULESET_ERROR_VALIDATIONS_FIELD_MISSING)
+            return ErrorDTO(ERROR_CODE_VALIDATIONS_FIELD_MISSING,RULESET_ERROR_VALIDATIONS_FIELD_MISSING)
+        
+        validations = ruleset["validations"]        
+        for validation in validations:
+            #Checking if rule field exists
+            if validation.get("rule","") == "":
+                self.logger.info(RULESET_ERROR_PRIMARY_RULE_FIELD_MISSING)
+                return ErrorDTO(ERROR_CODE_PRIMARY_RULE_FIELD_MISSING, RULESET_ERROR_PRIMARY_RULE_FIELD_MISSING)
+            
+            #Checking if all rules requested are supported rules. 
+            targetMethodName = f"rule_{validation['rule']}"
+            func = getattr(self, targetMethodName , None)
+            if not func:
+                self.logger.info(f"{RULESET_ERROR_INVALID_RULE}:{validation['rule']}")
+                return ErrorDTO(RULESET_ERROR_INVALID_RULE, f"'{validation['rule']}'")
+
+            targetColumn = validation.get("column","")
+            if targetColumn == "":
+                self.logger.info(RULESET_ERROR_PRIMARY_COLUMN_FIELD_MISSING)
+                return ErrorDTO(ERROR_CODE_PRIMARY_COLUMN_FIELD_MISSING, RULESET_ERROR_PRIMARY_COLUMN_FIELD_MISSING)
+            
+            if targetColumn not in self.target_dataframe.columns:
+                print(self.target_dataframe)
+                print(self.target_dataframe.columns)
+                errorMessage = f"{RULESET_ERROR_COLUMN_NOT_FOUND}:{targetColumn}"
+                self.logger.info(errorMessage)
+                return ErrorDTO(ERROR_CODE_COLUMN_NOT_FOUND, errorMessage)
+            
+            if validation.get("rule") == "should_be_compared_to":
+                #should_be_compared_to rule works with 2 columns and there are secondary rules applied between them.
+                if validation.get("args", None) is None:
+                    self.logger.info(RULESET_ERROR_ARGS_FIELD_MISSING)
+                    return ErrorDTO(ERROR_CODE_ARGS_FIELD_MISSING, RULESET_ERROR_ARGS_FIELD_MISSING)
+                
+                args = validation.get("args")
+                if args.get("rule", None) is None:
+                    self.logger.info(RULESET_ERROR_ARGS_RULE_FIELD_MISSING)
+                    return ErrorDTO(ERROR_CODE_ARGS_RULE_FIELD_MISSING, RULESET_ERROR_ARGS_RULE_FIELD_MISSING)
+                
+                if args.get("rule") not in self.should_be_compared_to_subrules:
+                    self.logger.info(RULESET_ERROR_ARGS_INVALID_SUBRULE)
+                    return ErrorDTO(ERROR_CODE_ARGS_INVALID_SUBRULE, RULESET_ERROR_ARGS_INVALID_SUBRULE)
+                
+                if args.get("secondary_column", None) is None:
+                    self.logger.info(RULESET_ERROR_ARGS_SECONDARY_COLUMN)
+                    return ErrorDTO(ERROR_CODE_ARGS_SECONDARY_COLUMN_MISSING, RULESET_ERROR_ARGS_SECONDARY_COLUMN)
+                
+                if args.get("rule") == "if_value_in_list":
+                    bindings = args.get("bindings")
+                    if type(bindings) != list:
+                        self.logger.info(f"{RULESET_ERROR_ARGS_BINDINGS}: missing or not a list of ojects")
+                        return ErrorDTO(ERROR_CODE_ARGS_BINDINGS_COLUMN_MISSING, RULESET_ERROR_ARGS_BINDINGS)
+                    if len(bindings) == 0:
+                        self.logger.info(f"{RULESET_ERROR_ARGS_BINDINGS}:bindings empty")
+                        return ErrorDTO(ERROR_CODE_ARGS_BINDINGS_COLUMN_MISSING, RULESET_ERROR_ARGS_BINDINGS)
+                    
+                    for obj in bindings:
+                        if obj.get("value",None) is None:
+                            self.logger.info(f"{RULESET_ERROR_ARGS_BINDINGS_VALUE_FIELD_MISSING}:'value' for object in binding, missing")
+                            return ErrorDTO(ERROR_CODE_ARGS_BINDINGS_VALUE_FIELD_MISSING,RULESET_ERROR_ARGS_BINDINGS_VALUE_FIELD_MISSING)
+                        if obj.get("valid_options",None) is None:
+                            self.logger.info(f"{RULESET_ERROR_ARGS_BINDINGS_VALID_OPTIONS_FIELD_MISSING}:'valid_options' for object in binding, missing")
+                            return ErrorDTO(ERROR_CODE_ARGS_BINDINGS_VALID_OPTIONS_FIELD_MISSING, RULESET_ERROR_ARGS_BINDINGS_VALID_OPTIONS_FIELD_MISSING)
+            
+            if validation.get("rule") == "should_exist_in_list":
+                if validation.get("args", None) is None:
+                    self.logger.info(RULESET_ERROR_ARGS_FIELD_MISSING)
+                    return ErrorDTO(ERROR_CODE_ARGS_FIELD_MISSING, RULESET_ERROR_ARGS_FIELD_MISSING)
+                
+                args = validation.get("args")
+                if type(args.get('list', False)) == list:
+                    if (len(args.get('list',0)) == 0):
+                        self.logger.info(f"{RULESET_ERROR_ARGS_LIST_FIELD_MISSING}:'list' field for args invalid/empty")
+                        return ErrorDTO(ERROR_CODE_ARGS_LIST_MISSING, RULESET_ERROR_ARGS_LIST_FIELD_MISSING)
+                else:
+                    if args.get('service') == None:
+                        self.logger.info(f"{RULESET_ERROR_ARGS_SERVICE_MISSING}:'service' field for args missing")
+                        return ErrorDTO(ERROR_CODE_ARGS_SERVICE_MISSING,RULESET_ERROR_ARGS_SERVICE_MISSING)
+                    if args.get('category') == None:
+                        self.logger.info(f"{RULESET_ERROR_ARGS_CATEGORY_MISSING}:'category' field for args missing")
+                        return ErrorDTO(ERROR_CODE_ARGS_CATEGORY_MISSING,RULESET_ERROR_ARGS_CATEGORY_MISSING)
+                    
+            
+            #Add other method specific validations here, For example. rule_should_be_in_range method should get two integers or floats and nothing else
+        
+        self.logger.info(f"{PROCESS_VALIDATING_RULESET}:END")
+        return True
+        
+    
+    def applyRulesets(self,ruleset):
+        """Applies rulests to a target DB
+        
+        Validation {
+            "rule" : *required
+            "column" : *required
+            "args" : optional {
+                "success_threshold" : optional, Defaults to 0
+            }
+        }
+
+        Args:
+            ruleset ({}): This holds all the validations to be performed. 
+        """
+
+        self.ruleset_valid = False
+        isRulesetValid = self.validateRuleset(ruleset)
+        if isinstance(isRulesetValid , ErrorDTO):
+            self.ruleset_valid = False
+            return
+        
+        if ruleset.get("primary_key_column","") != "":
+            #Before PK column is saved, we must check if all the id's in pk column is valid, there cant be any duplicates or NaN's
+            column_values = self.target_dataframe[ruleset.get("primary_key_column")].tolist()
+            valid_id_list = True
+            index_dict = {}
+            for index in column_values:
+                index_dict[str(index)] = str(index)
+                if str(index) == "NaN":
+                    valid_id_list = False
+            if len(index_dict.keys()) != len(column_values):
+                valid_id_list = False
+            if not valid_id_list:
+                self.logger.warn("PK field error - Either id has Duplicates or Nulls Exist. Will be defaulting to index as id")
+                ruleset["primary_key_column"] = ""
+        
+        self.pk_column_name = ruleset.get("primary_key_column","")
+        self.logger.debug(f"Active PK column : {self.pk_column_name}")
+        self.validation.setPkColumn(self.pk_column_name)
+        
+        validations = ruleset["validations"]
+        validation_functions = []
+        
+        #Creating a list of functions that must be executed to perform the validations
+        for validation in validations:
+            targetMethodName = f"rule_{validation['rule']}"
+            func = getattr(self, targetMethodName , None)
+            validation_functions.append((func , validation))
+        
+        self.logger.info(f"{PROCESS_VALIDATING}:START")
+        #applying the rules
+        for (func, validation) in validation_functions:
+            startTime = self.helper.getCurrentTime()
+            self.logger.debug(f"target_col= {validation['column']}")
+            res = func(target_col=validation["column"] , args=validation.get("args",{}) )
+            
+            success_threshold = (validation.get("args",{})).get("success_threshold",VALIDATION_SUCCESS_THRESHOLD)
+            displayed_outlier_count = (validation.get("args",{})).get("max_outlier_displayed" , VALIDATION_MAX_OUTLIER_DISPLAY_COUNT)
+            
+            timeElapsed = self.helper.calculateTimeElapsed(startTime)
+            
+            self.validation.addValidation(target_column=validation['column'],description=validation['rule'] ,dataframe=self.target_dataframe , 
+                                          result_array=res, success_threshold=success_threshold, elapsed_time= timeElapsed, max_outlier_displayed=displayed_outlier_count)
+
+        self.logger.info(f"{PROCESS_VALIDATING}:END")
+        self.ruleset_valid = True
+        
+        
+    def get_primary_keys_for_indexes(self, outlier_indexes, primary_key_column):
+        primary_keys = self.target_dataframe.loc[outlier_indexes, primary_key_column].tolist()
+        return primary_keys
+    
+    def get_rule_result(self, rule_name , outlier_indexes , outlier_values = []):
+        outlier_values = outlier_values.apply(lambda x: None if pd.isna(x) else x).tolist()
+        result = {
+            "rule": rule_name,
+            "outlier_indexes" : outlier_indexes.tolist(),
+            "outlier_values" : outlier_values
+        }
+        if self.pk_column_name != "":
+            result["outlier_indexes"] = self.get_primary_keys_for_indexes(outlier_indexes.tolist(), self.pk_column_name)
+        
+        return result
+    
+    def rule_should_not_be_null(self, target_col, args={}):
+        def is_value_null(value):
+            #Random white spaces should also be considered as a null
+            if value == None:
+                return None
+            if type(value) == str:
+                value = value.strip()
+                if value == '':
+                    return None
+            return value
+        self.target_dataframe[target_col] = self.target_dataframe[target_col].apply(is_value_null)
+        null_indexes = self.target_dataframe[self.target_dataframe[target_col].isnull()].index
+        null_values = self.target_dataframe.loc[null_indexes, target_col]
+        result = self.get_rule_result("should_not_be_null", null_indexes, null_values)
+        return result
+    
+    def rule_should_be_in_range(self, target_col, args):
+        min_value = args.get('min_value')
+        max_value = args.get('max_value')
+        if min_value is None or max_value is None:
+            print("Invalid range arguments.")
+            return
+        
+        range_outside_indexes = self.target_dataframe[
+            (self.target_dataframe[target_col] < min_value) | (self.target_dataframe[target_col] > max_value)
+        ].index
+        range_outside_values = self.target_dataframe.loc[range_outside_indexes, target_col]
+        result = self.get_rule_result("should_be_in_range", range_outside_indexes, range_outside_values)
+        return result
+    
+    def rule_should_not_be_duplicate(self, target_col, args={}):
+        # Filter out rows with missing ID numbers
+        filtered_df = self.target_dataframe.dropna(subset=[target_col])
+        
+        # Find duplicates based on 'target_col'
+        duplicate_indexes = filtered_df[filtered_df.duplicated(subset=[target_col], keep=False)].index
+        duplicate_values = self.target_dataframe.loc[duplicate_indexes, target_col]
+        result = self.get_rule_result("should_not_be_duplicate", duplicate_indexes, duplicate_values)
+        return result
+
+    def rule_should_be_english(self, target_col, args={}):
+        # For this and the arabic check i should add the ability to whitelist characters for example ./,?
+        # If there is any characters that are non english / Or arabic in case of the other method. They should be considered as outliers 
+        # Unless the whitelisted characters are entered via args
+        self.target_dataframe[target_col] = self.target_dataframe[target_col].fillna('')
+        non_english_indexes = self.target_dataframe[self.target_dataframe[target_col].str.contains('[^a-zA-Z\s!_\/|\\{}.-]')].index
+        outlier_values = self.target_dataframe.loc[non_english_indexes, target_col]
+        result = self.get_rule_result("should_be_english", non_english_indexes, outlier_values)
+        return result
+    
+    def rule_should_be_arabic(self, target_col, args={}):
+        self.target_dataframe[target_col] = self.target_dataframe[target_col].fillna('')
+        
+        whitelist = args.get("whitelist", None)
+        if whitelist is not None:
+            pattern = f'^[\u0600-\u06FF{whitelist}]*$'
+        else:
+            pattern = '^[\u0600-\u06FF]*$'
+        
+        arabic_indexes = self.target_dataframe[self.target_dataframe[target_col].str.contains(pattern, regex=True)].index
+        all_indexes = self.target_dataframe.index
+        non_arabic_indexes = all_indexes.difference(arabic_indexes)
+        outlier_values = self.target_dataframe.loc[non_arabic_indexes, target_col]
+        result = self.get_rule_result("should_be_arabic", non_arabic_indexes, outlier_values)
+        return result
+    
+    def rule_should_exist_in_list(self, target_col, args={}):
+        """Checks if target_col value exists in a list. List can be either explicitly provided if not,
+        the service and category must be specified so that it fetches the appropriate list from masterdata API.
+
+        Args:
+            target_col (String): Target Column
+            args (dict, optional): either {'list':x} or {'service':y , 'category':z}. Defaults to {}.
+
+        Returns:
+            type(get_rule_result()): Returns an object from get_rule_result method
+        """
+        
+        if type(args.get('list', False)) == list:
+            target_list = args.get('list')
+        else:
+            if self.masterdataModules == []:
+                self.masterdataModules = self.api_client.getAllMasterdata()
+
+            target_service_name = args.get('service')
+            target_service = [item for item in self.masterdataModules if item["name"] == target_service_name][0]
+
+            target_category = args.get('category')
+            if self.masterdataCategories.get(target_service_name , {}).get(target_category) == None:
+                if self.masterdataCategories.get(target_service_name) == None:
+                    self.masterdataCategories[target_service_name] = {}
+                
+                categoryId = [item for item in target_service["categories"] if item["name"] == target_category][0]["id"]
+                self.masterdataCategories[target_service_name][target_category] = self.api_client.getCategoryDetailsMasterdata(categoryId)
+            
+            target_list_objects = self.masterdataCategories[target_service_name][target_category]
+            target_list = [item["name"] for item in target_list_objects]
+
+        # Check for outliers
+        outlier_indexes = []
+        outlier_values = []
+        for idx, value in self.target_dataframe[target_col].items():
+            comparisonValue = str(value)
+            if comparisonValue not in target_list:
+                outlier_indexes.append(idx)
+                outlier_values.append(value)
+
+        outlier_values = pd.Series(outlier_values)
+        outlier_indexes = pd.Series(outlier_indexes)
+        result = self.get_rule_result("should_exist_in_list", outlier_indexes, outlier_values)
+        return result
+
+    
+    def rule_should_be_valid_birth_date(self, target_col, args={}):
+        self.target_dataframe[target_col] = self.target_dataframe[target_col].fillna('')
+        date_format = args.get("date_format")
+        invalid_indexes = []
+        invalid_values = []
+        for idx, value in self.target_dataframe[target_col].items():
+            try:
+                # Check if the value can be converted to a valid date
+                datetime.strptime(value, date_format)
+                if pd.to_datetime(value) >= pd.Timestamp.today():
+                    invalid_indexes.append(idx)
+                    invalid_values.append(str(value))
+            except ValueError:
+                invalid_indexes.append(idx)
+                invalid_values.append(str(value))
+        
+        outlier_indexes = pd.Series(invalid_indexes)
+        outlier_values = pd.Series(invalid_values)
+        result = self.get_rule_result("should_be_valid_birth_date", outlier_indexes, outlier_values)
+        return result
+    
+    def rule_should_be_valid_arabic_birth_date(self, target_col , args={}):
+        self.target_dataframe[target_col] = self.target_dataframe[target_col].fillna('')
+        date_format = args.get("date_format")
+        invalid_indexes = []
+        invalid_values = []
+        for idx, value in self.target_dataframe[target_col].items():
+            try:
+                datetimeSplit = datetime.strptime(value, date_format)
+                georgianDate = Hijri(int(datetimeSplit.year),int(datetimeSplit.month),int(datetimeSplit.day)).to_gregorian()
+                if pd.to_datetime(georgianDate) >= pd.Timestamp.today():
+                    invalid_indexes.append(idx)
+                    invalid_values.append(str(value))
+            except:
+                invalid_indexes.append(idx)
+                invalid_values.append(str(value))
+        
+        outlier_indexes = pd.Series(invalid_indexes)
+        outlier_values = pd.Series(invalid_values)
+        result = self.get_rule_result("should_be_valid_arabic_birth_date", outlier_indexes, outlier_values)
+        return result
+    
+    def rule_should_be_valid_id_number(self, target_col , args={}):
+        def is_valid_id(id):
+            id = id.strip()
+
+            if not id.isdigit():
+                return -1
+            if len(id) != 10:
+                return -1
+            type_ = int(id[0])
+
+            if type_ not in [1, 2]:
+                return -1
+            sum_ = 0
+
+            for i in range(10):
+                if i % 2 == 0:
+                    ZFOdd = "{:02d}".format(int(id[i]) * 2)
+                    sum_ += int(ZFOdd[0]) + int(ZFOdd[1])
+                else:
+                    sum_ += int(id[i])
+
+            return -1 if sum_ % 10 != 0 else type_
+        
+        invalid_indexes = []
+        invalid_values = []
+
+        for idx, value in self.target_dataframe[target_col].items():
+
+            if type(value) == float:
+                invalid_indexes.append(idx)
+                invalid_values.append(value)
+                continue
+            
+            if is_valid_id(value) <= 0:
+                invalid_indexes.append(idx)
+                invalid_values.append(value)
+
+        outlier_indexes = pd.Series(invalid_indexes)
+        outlier_values = pd.Series(invalid_values)
+        result = self.get_rule_result("should_be_valid_id_number", outlier_indexes, outlier_values)
+        return result
+
+    def if_col_A_Not_Null_Col_B_Should_not_be_null(self, target_col, secondary_column):
+        """ Takes the target_column and the secondary_column, if there is a value in target_column
+            then secondary column should also have a value.
+    
+        Args:
+            target_col (String): Column that is being validated
+            secondary_column (String): Secondary column that is being refered to
+
+        Returns:
+            Series: Returns a Boolean mask that matches the described condition.
+        """
+        
+        self.target_dataframe[target_col] = self.target_dataframe[target_col].fillna("")
+        self.target_dataframe[secondary_column] = self.target_dataframe[secondary_column].fillna("")
+        
+        def is_col_A_Not_Null_Col_B_Should_not_be_null(col_a,col_b):
+            col_a, col_b = str(col_a), str(col_b)
+            if col_a != "":
+                if col_b == "":
+                    return False
+                return True
+            return True
+        
+        return self.target_dataframe.apply(lambda x: is_col_A_Not_Null_Col_B_Should_not_be_null(x[target_col], x[secondary_column]), axis=1)
+        
+    
+    def if_col_A_Null_Col_B_Should_be_null(self, target_col, secondary_column):
+        """ Takes the target_column and the secondary_column, if there is a value in target_column
+            then secondary column should also have a value.
+    
+        Args:
+            target_col (String): Column that is being validated
+            secondary_column (String): Secondary column that is being refered to
+
+        Returns:
+            Series: Returns a Boolean mask that matches the described condition.
+        """
+        self.target_dataframe[target_col] = self.target_dataframe[target_col].fillna("")
+        self.target_dataframe[secondary_column] = self.target_dataframe[secondary_column].fillna("")
+        def is_col_A_Null_Col_B_Should_be_null(col_a,col_b):
+            col_a, col_b = str(col_a), str(col_b)
+            if col_a == "":
+                if col_b != "":
+                    return False
+                return True
+            return True
+        
+        return self.target_dataframe.apply(lambda x: is_col_A_Null_Col_B_Should_be_null(x[target_col], x[secondary_column]), axis=1) 
+    
+    def compare_if_values_in_lists(self, primary_column, secondary_column ,bindings):
+        def is_value_in_list(actual_value, actual_secondary_value, target_value , valid_options):
+            if target_value == actual_value:
+                if actual_secondary_value in valid_options:
+                    return True
+            return False
+        
+        valueMask = None
+        for binding in bindings:
+            target_value = binding.get("value",None)
+            valid_options = binding.get("valid_options",None)
+            if valueMask is None:
+                valueMask = self.target_dataframe.apply(lambda x: is_value_in_list(x[primary_column] , x[secondary_column], target_value , valid_options) , axis=1)
+            else:
+                tempMask = self.target_dataframe.apply(lambda x: is_value_in_list(x[primary_column] , x[secondary_column], target_value , valid_options) , axis=1)
+                valueMask = valueMask | tempMask
+        return valueMask
+
+    def rule_should_be_compared_to(self, target_col, args={}):
+        secondary_column = args.get('secondary_column')
+        comparison_rule = args.get('rule')
+
+        if secondary_column is None or comparison_rule is None:
+            print("Invalid arguments.")
+            return
+
+        if comparison_rule not in self.should_be_compared_to_subrules:
+            print("Invalid comparison rule.")
+            return
+
+        # Perform the comparison
+        comparison_result = None
+        if comparison_rule == '>':
+            comparison_result = self.target_dataframe[target_col] > self.target_dataframe[secondary_column]
+        elif comparison_rule == '<':
+            comparison_result = self.target_dataframe[target_col] < self.target_dataframe[secondary_column]
+        elif comparison_rule == '==':
+            comparison_result = self.target_dataframe[target_col] == self.target_dataframe[secondary_column]
+        elif comparison_rule == '!=':
+            comparison_result = self.target_dataframe[target_col] != self.target_dataframe[secondary_column]
+        elif comparison_rule == '>=':
+            comparison_result = self.target_dataframe[target_col] >= self.target_dataframe[secondary_column]
+        elif comparison_rule == '<=':
+            comparison_result = self.target_dataframe[target_col] <= self.target_dataframe[secondary_column]
+        elif comparison_rule == 'if_col_A_Not_Null_Col_B_Should_not_be_null':
+            comparison_result = self.if_col_A_Not_Null_Col_B_Should_not_be_null(target_col,secondary_column)
+        elif comparison_rule == 'if_col_A_Null_Col_B_Should_be_null':
+            comparison_result = self.if_col_A_Null_Col_B_Should_be_null(target_col, secondary_column)
+        elif comparison_rule == "if_value_in_list":
+            comparison_result = self.compare_if_values_in_lists( target_col , secondary_column, args.get('bindings'))
+        
+        
+        outlier_indexes = pd.Series(comparison_result[~comparison_result].index)
+        outlier_values = self.target_dataframe.loc[outlier_indexes, target_col] 
+
+        result = self.get_rule_result("should_be_compared_to", outlier_indexes, outlier_values)
+        return result
+        
+
+
+
+--- hero_button.html ---
+{% macro hero_button(text , anchor , path_to_root) -%}
+
+<head>
+    <link rel="stylesheet" type="text/css" href={{path_to_root + "static/css/hero_button.css"}}>
+</head>
+
+<a href={{anchor}} class="hero_button_anchor">
+    <div id="main_div" >
+        <p id="btn_text">{{text}}</p>
+    </div>
+</a>
+
+{%- endmacro %}
+
+--- dashboard_list_component.html ---
+{% macro dashboard_list_component(data, path_to_root, anchor) -%}
+
+<head>
+    <link rel="stylesheet" href={{path_to_root + "static/css/dashboard_list_component.css" }}>
+</head>
+
+<a href={{anchor}}>
+    <div id="dashboard_list_container_body">
+        <div>
+            {% if data['status'] != "FAIL" %}
+                <img src={{path_to_root + "static/assets/green-checkmark.png" }} alt="">
+            {% else %}
+                <img src={{path_to_root + "static/assets/cross-mark.png" }} alt="">
+            {% endif %}
+            <p>{{ data['status'] }}</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>{{ data['elapsed_time'] }} Elapsed</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>Run Name : {{ data['column_name'] + "." + data['description'] }}</p>
+            <div class="dashboard_list_container_vertical_divider"></div>
+        </div>
+        <div>
+            <p>Outlier Percent : {{ data['result_percent'] }}%</p>
+        </div>
+    </div>
+</a>
+
+{%- endmacro %}
+
+--- dashboard.html ---
+{% from 'header/headerComponent.html' import headerComponent %}
+{% from 'history/history.html' import history %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/css/dashboard.css">
+</head>
+<body>
+    {{ headerComponent('Insert Text',"") }}
+    {{ history(records) }}
+</body>
+    
+</html>
+
+--- headerComponent.html ---
+{% macro headerComponent(text,path_to_root) -%}
+
+<head>
+  <link rel="stylesheet" type="text/css" href={{ path_to_root +"static/css/headerComponent.css"}}>
+</head>
+
+<div id="header_div">
+  <h1 id="app_name">Sentinel</h1>
+</div>
+
+{%- endmacro %}
+
+--- history.html ---
+{% from 'buttons/hero_button/hero_button.html' import hero_button %}
+{% from 'components/dashboard_list_component/dashboard_list_component.html' import dashboard_list_component %}
+
+{% macro history(records) -%}
+
+<head>
+  <link rel="stylesheet" type="text/css" href="static/css/history.css">
+</head>
+
+<div id="history_body_container">
+  <div id="validation_nav_container">
+    <p>{{records[0]["schema_name"] + "." + records[0]["table_name"] }}</p>
+  </div>
+
+  <div id="history_result_container">
+    <ul>
+      {% for record in records %}
+        {{dashboard_list_component(record,"", "./validations/validation_result_" + record['id'] + ".html")}}
+      {% endfor %}
+    </ul>
+  </div>
+  
+</div>
+
+{%- endmacro %}
+
+--- validation_details_page.html ---
+{% from 'header/headerComponent.html' import headerComponent %}
+{% from 'buttons/hero_button/hero_button.html' import hero_button %}
+{% from 'components/dashboard_list_component/dashboard_list_component.html' import dashboard_list_component %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Validation Result</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/validation_details_page.css">
+</head>
+
+<body id="validation_detals_page_body">
+    {{ headerComponent('Insert Text',"../") }}
+
+    <div id="validation_details_p_body_container">
+
+        <!-- Contains validation title & back button -->
+        <div id="validation_details_p_title_section">
+            <p>Column Name - Validation Name</p>
+            {{hero_button("Back" , "../index.html","../")}}
+        </div>
+
+        <!-- Main Detail Container -->
+        <div id="validation_details_p_main_detail_container">
+
+            <!-- validation list component -->
+            {{dashboard_list_component(validation_record,"../" , "")}}
+
+            <!-- Outlier txt - Maximum results shown text -->
+            <div id="validation_details_p_outlier_heading">
+                <p>Outliers</p>
+                <p id="validation_details_p_first_outlier_count">Showing first {{validation_record['max_outlier_displayed']}} Outliers</p>
+            </div>
+
+            <!-- table -->
+            <table id="validation_details_p_validation_detail_table">
+                <tr class="validation_details_p_validation_detail_table_row">
+                    {% if validation_record['pk'] == "" %}
+                    <th>Index</th>
+                    {% else %}
+                    <th>{{validation_record['pk']}}</th>
+                    {% endif %}
+                    <th>Value</th>
+                </tr>
+
+                {% if validation_record['max_outlier_displayed'] > (validation_record['result_array']['outlier_indexes'] | length ) %}
+                    {% for outlier_index in range(validation_record['result_array']['outlier_indexes'] | length ) %}
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>{{validation_record['result_array']['outlier_indexes'][outlier_index] }}</td>
+                        <td>{{validation_record['result_array']['outlier_values'][outlier_index] }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    {% for outlier_index in range(validation_record['max_outlier_displayed']) %}
+                    <tr class="validation_details_p_validation_detail_table_row">
+                        <td>{{validation_record['result_array']['outlier_indexes'][outlier_index] }}</td>
+                        <td>{{validation_record['result_array']['outlier_values'][outlier_index] }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+
+                
+                
+              </table>
+
+            <!-- Download Button right aligned -->
+            <div id="validation_details_p_outlier_heading_download_button_container">
+                {{hero_button("Download" , "a","../")}}
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+--- playground.py ---
+def print_unicode_code_points(string):
+    for char in string:
+        print(f"{char}: {ord(char)}")
+
+# Call the function for each problematic string
+strings = ['ابراهيم This should Fail', 'OMAR', 'مد_اه', 'مريMUSTFAIL', 'باديه عبده ', 'محمد يوسف', 'IBRAHIM', 'ذهبه علي احمد', 'صامل شارع ']
+for string in strings:
+    print_unicode_code_points(string)
+    print("----------------------")
+
+
+--- testHelper.py ---
+
+import json
+import os
+from helper import Helper
+from logging import Logger
+
+class TestHelper():
+    
+    def __init__(self, logger : Logger):
+        self.logger = logger
+        self.helper = Helper(logger)
+    
+    @staticmethod
+    def extractValidations(validation_results_obj):
+        return validation_results_obj["validations"]
+
+    @staticmethod
+    def extractResults(validation):
+        return validation["result_array"]
+    
+    @staticmethod
+    def extractOutlierValues(result):
+        return result["outlier_values"]
+
+    def getResults(self, validation_results_obj):
+        return self.extractResults(validation_results_obj)
+
+    def getResultOutlierValues(self, validation_results_obj):
+        validationResult = self.getResults(validation_results_obj)
+        return self.extractOutlierValues(validationResult)
+
+    def loadExpectedResult(self, folder_name, file_name, key):
+        """Loads Expected results from tests/data/{folder_name}/{file_name}
+
+        Args:
+            folder_name (_type_): Folder Name
+            file_name (_type_): Target Result File Name
+        """
+        current_file_dir = os.path.dirname(os.path.abspath(__file__))
+        expected = self.helper.loadFile(f"{current_file_dir}/data/{folder_name}/{file_name}")
+        expected = json.loads(expected)
+        expected[key] = expected[key].replace('None', 'null')
+        return expected[key]
+
+--- test_validations.py ---
+import json
+import unittest, os
+
+from scripts.constants import *
+from main import initLogger
+from validator import validator
+from collections import Counter
+from testHelper import TestHelper
+
+class TestValidations(unittest.TestCase):
+    
+    @classmethod
+    def setUpClass(self):
+        self.logger = initLogger()
+        self.testHelper = TestHelper(self.logger)
+        self.current_file_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    @classmethod
+    def initValidator(self, target_ruleset_path=None, db_type=None, schema=None, table=None, folder_id=None, path_to_result_folder=None, table_cache_path=None):
+        target_ruleset_path     = target_ruleset_path       if target_ruleset_path!=None else f"{os.getcwd()}{target_ruleset_path}"
+        db_type                 = db_type                   if db_type!=None else "ORACLE"
+        schema                  = schema                    if schema!=None else "RF_EMPI"
+        table                   = table                     if table!=None else "PATIENT_INFO"
+        folder_id               = folder_id                 if folder_id!=None else "default"
+        folder_id               = folder_id.strip()
+        path_to_result_folder   = path_to_result_folder     if path_to_result_folder!=None else os.path.abspath(f"../{CREATE_UI_BUILD_DIR_RESULT_PATH}",
+        table_cache_path        = table_cache_path          if table_cache_path!=None else f"{os.getcwd()}/results/table_cache")
+        
+        return validator(
+            ruleset_path= target_ruleset_path,
+            target_db_type= db_type,
+            target_schema= schema,
+            target_table = table,
+            logger = self.logger,
+            pathToResultFolder=path_to_result_folder,
+            build_folder_id= folder_id,
+            table_cache_path= table_cache_path
+        )
+    
+    def test_rule_should_not_be_null(self):
+        validator = self.initValidator(
+            schema= "TEST",
+            table= "RULE_SHOULD_NOT_BE_NULL",
+            target_ruleset_path= f"{self.current_file_dir}/rulesets/valid/rule_should_not_be_null.json",
+            path_to_result_folder= f"{self.current_file_dir}/results",
+            table_cache_path = f"{self.current_file_dir}/data/validations",
+        )
+        fullResult = validator.start()
+        outlier_values = self.testHelper.getResultOutlierValues(fullResult[0])
+        expected = self.testHelper.loadExpectedResult("validations","EXPECTED.json","RULE_SHOULD_NOT_BE_NULL")
+        self.assertEqual(outlier_values,json.loads(expected))
+    
+    def test_rule_should_be_in_range(self):
+        validator = self.initValidator(
+            schema= "TEST",
+            table= "RULE_SHOULD_BE_IN_RANGE",
+            target_ruleset_path= f"{self.current_file_dir}/rulesets/valid/rule_should_be_in_range.json",
+            path_to_result_folder= f"{self.current_file_dir}/results",
+            table_cache_path = f"{self.current_file_dir}/data/validations",
+        )
+        fullResult = validator.start()
+        outlier_values = self.testHelper.getResultOutlierValues(fullResult[0])
+        expected = self.testHelper.loadExpectedResult("validations","EXPECTED.json","RULE_SHOULD_BE_IN_RANGE")
+        self.assertEqual(outlier_values,json.loads(expected))
+    
+    def test_rule_should_be_english(self):
+        validator = self.initValidator(
+            schema= "TEST",
+            table= "RULE_SHOULD_BE_ENGLISH",
+            target_ruleset_path= f"{self.current_file_dir}/rulesets/valid/rule_should_be_english.json",
+            path_to_result_folder= f"{self.current_file_dir}/results",
+            table_cache_path = f"{self.current_file_dir}/data/validations",
+        )
+        fullResult = validator.start()
+        outlier_values = self.testHelper.getResultOutlierValues(fullResult[0])
+        expected = self.testHelper.loadExpectedResult("validations","EXPECTED.json","RULE_SHOULD_BE_ENGLISH")
+        self.assertEqual(outlier_values,eval(expected))
+    
+    def test_rule_should_be_arabic(self):
+        validator = self.initValidator(
+            schema= "TEST",
+            table= "RULE_SHOULD_BE_ARABIC",
+            target_ruleset_path= f"{self.current_file_dir}/rulesets/valid/rule_should_be_arabic.json",
+            path_to_result_folder= f"{self.current_file_dir}/results",
+            table_cache_path = f"{self.current_file_dir}/data/validations",
+        )
+        fullResult = validator.start()
+        outlier_values = self.testHelper.getResultOutlierValues(fullResult[0])
+        print("Here Lies Outliers : ",outlier_values)
+        # expected = self.testHelper.loadExpectedResult("validations","EXPECTED.json","RULE_SHOULD_BE_ARABIC")
+        self.assertEqual(outlier_values,eval("[]"))
+    
+    # def test_rule_should_exist_in_list(self):
+    #     self.assertEqual(True,True)
+    
+    # def test_rule_should_be_valid_birth_date(self):
+    #     self.assertEqual(True,True)
+    
+    # def test_rule_should_be_valid_arabic_birth_date(self):
+    #     self.assertEqual(True,True)
+    
+    # def test_rule_should_be_valid_id_number(self):
+    #     self.assertEqual(True,True)
+    
+    # def test_compare_if_values_in_lists(self):
+    #     self.assertEqual(True,True)
+    
+    # def test_rule_should_be_compared_to(self):
+    #     self.assertEqual(True,True)
+    
+
